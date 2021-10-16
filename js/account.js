@@ -5,7 +5,7 @@ const getUserOrders = () => {
     const savedUserData = JSON.parse(localStorage.getItem('user_data'))
     $('#account_username').text(savedUserData.user_data.full_name)
     const token = savedUserData.token_string 
-    console.log(token)
+    // console.log(token)
 
     $.ajax({
         type: "GET",
@@ -17,7 +17,7 @@ const getUserOrders = () => {
             xhr.setRequestHeader('Authorization', token)
         },
         success: function(data) {
-            // console.log(data)
+            console.log(data)
             const body = data.body 
             const code = data.code 
             if (code == 200) {
@@ -42,7 +42,7 @@ const handleSuccess = (orderArray) => {
             var orderRow = `
             <tr>
                 <td>${counter}</td>
-                <td>${order.order.order_size} gas cylinder</td>
+                <td>${order.order.product}</td>
                 <td>${order.order.order_status}</td>
                 <td>&#8358;${order.order.order_amount}</td>
             </tr>

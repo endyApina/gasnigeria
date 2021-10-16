@@ -62,7 +62,9 @@ const footerDiv = `
                     <div class="footer-menu">
                         <ul>
                             <li><a href="login.html">Login</a></li>
+                            <li><a href="shop.html">Store</a></li>
                             <li><a href="cart.html">My cart</a></li>
+                            <li><a href="contact.html">Bulk Order</a></li>
                             <li><a href="account.html">My account</a></li>
                             <li><a href="contact.html">Contact us</a></li>
                         </ul>

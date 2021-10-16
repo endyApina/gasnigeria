@@ -47,8 +47,13 @@ const handleSubmitSuccess = (data) => {
     console.log(data)
     if (data.code != 200) {
       $('#error_text').text(data.message)
-      $('#create_account_btn').html(configLoader)
-      $('#create_account_btn').prop("disabled", true)
+      $('#create_account_btn').html('')
+      $('#create_account_btn').prop("disabled", false)
+
+      if (data.message == "Email Already exists") {
+        alert("Email already exists")
+        location.href = "login.html"
+      }
     } 
   
     if (data.code == 200 && data.message == "Success") {

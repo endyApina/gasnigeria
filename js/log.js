@@ -73,7 +73,7 @@ const handleLogin = (data) => {
     if (data.code == 200 && data.message == "Success") {
       localStorage.setItem('user_data', JSON.stringify(data.body))
 
-      const userOrderData = JSON.parse(localStorage.getItem("selected_gas"))
+      const userOrderData = JSON.parse(localStorage.getItem(localCartData))
       console.log(userOrderData); 
   
       if (userOrderData) {
@@ -81,6 +81,10 @@ const handleLogin = (data) => {
         $('#sign_in_btn').html("SIGN IN")
         console.log("valid temp login")
         location.href = "checkout.html"
+      } else {
+        $('#sign_in_btn').prop("disabled", false)
+        $('#sign_in_btn').html("SIGN IN")
+        location.href="shop.html"
       }
     }
   }

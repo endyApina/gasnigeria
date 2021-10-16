@@ -1,50 +1,52 @@
-/* Contact Form Dynamic */
+$('#submitRequest').click(function(e) {
+	e.preventDefault() 
 
-$(function() {
+	var fullName = $('#fullName').val() 
+	var email = $('#email').val()
+	var phone = $('#phoneNumber').val()
+	var message = $('textarea#message').val()
 
-	// Get the form.
-	var form = $('#contact-form');
+	if (fullName == "" || email == "" || phone == "" || message == "") {
+		alert("enter all information")
+		return
+	}
 
-	// Get the messages div.
-	var formMessages = $('.form-messege');
+	var data = {
+		full_name: fullName, 
+		email: email, 
+		phone: phone, 
+		message: message
+	}
 
-	// Set up an event listener for the contact form.
-	$(form).submit(function(e) {
-		// Stop the browser from submitting the form.
-		e.preventDefault();
+	console.log(data)
 
-		// Serialize the form data.
-		var formData = $(form).serialize();
+	$.ajax({
+        type: "POST",
+        data: JSON.stringify(data),
+        url: BULK_GAS_ORDER,
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader('Content-Type', 'application/json')
+            xhr.setRequestHeader('Accept', 'application/json')
+        },
+        success: function(data) {
+            console.log(data)
+            const code = data.code 
+            const body = data.body 
 
-		// Submit the form using AJAX.
-		$.ajax({
-			type: 'POST',
-			url: $(form).attr('action'),
-			data: formData
-		})
-		.done(function(response) {
-			// Make sure that the formMessages div has the 'success' class.
-			$(formMessages).removeClass('error');
-			$(formMessages).addClass('success');
-
-			// Set the message text.
-			$(formMessages).text(response);
-
-			// Clear the form.
-			$('#contact-form input,#contact-form textarea').val('');
-		})
-		.fail(function(data) {
-			// Make sure that the formMessages div has the 'error' class.
-			$(formMessages).removeClass('success');
-			$(formMessages).addClass('error');
-
-			// Set the message text.
-			if (data.responseText !== '') {
-				$(formMessages).text(data.responseText);
-			} else {
-				$(formMessages).text('Oops! An error occured and your message could not be sent.');
-			}
-		});
-	});
-
-});
+            if (code == 200) {
+                alert("message recieved")
+				location.href="shop.html"
+            } else {
+                orderFailed()
+                $('#place_gas_order').prop("disabled", false)
+                $('#place_gas_order').html("PLACE ORDER")
+                location.href = "index.html"
+            }
+        },
+        error: function(xhr, status) {
+            console.log(xhr)
+            console.log(status)
+        },
+        processData: false
+    });
+})
