@@ -62,7 +62,7 @@ const handleSubmitSuccess = (data) => {
       $('#create_account_btn').html(configLoader)
       $('#create_account_btn').prop("disabled", true)
       setTimeout(() => {
-        location.href = 'index.html#cylinder_section'
+        location.href = 'login.html'
       }, 1000);
     }
   }

@@ -12,17 +12,24 @@ if (Array.isArray(cartArray)) {
     cartArray.forEach(cart => {
         // console.log(cart)
         var {product_data, quantity} = cart
-        var {weight, price, product_id, gas_image, product} = product_data
+        var {weight, price, product_id, image, product} = product_data
 
 
         var thisOrder = quantity * convertPriceStringtoInt(price)
         totalCartOrder = totalCartOrder + thisOrder
 
+        console.log(image)
+
+        var gasSRC = image
+        if (gasSRC == "") {
+            gasSRC = "gasimg/small.png"
+        }
+
         var row = `
         <tr>
             <td class="cart-product-remove"><a href="javascript:;" class="removeOrder" data-product-id=${product_id}>x</a></td>
             <td class="cart-product-image">
-                <a href="javascript:;"><img src="${gas_image}" alt="#"></a>
+                <a href="javascript:;"><img src="${gasSRC}" alt="#"></a>
             </td>
             <td class="cart-product-info">
                 <h4><a href="javascript:;">${product}</a></h4>

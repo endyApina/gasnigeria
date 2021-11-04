@@ -51,7 +51,7 @@ const headerNav = `
                     <div class="ltn__main-menu">
                         <ul>
                             <li><a href="index.html">Home</a></li>
-                            <li><a href="shop.html">Store</a></li>
+                            <li><a href="order.html">Store</a></li>
                             <li><a href="account.html">Orders</a></li>
                             <li><a href="contact.html">Bulk Order</a></li>
                             <li class="special-link"><a href="shop.html">ORDER NOW</a></li>
@@ -92,7 +92,7 @@ const mobileNav = `
         <div class="ltn__utilize-menu">
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="shop.html">Store</a></li>
+                <li><a href="order.html">Store</a></li>
                 <li><a href="account.html">Orders</a></li>
                 <li><a href="contact.html">Bulk Order</a></li>
             </ul>

@@ -6,6 +6,8 @@ $('#app_name').text(appName)
 
 const localViewedProduct = "viewed_product"
 const localCartData = "cart_array"
+const localProducts = "product"
+const localSelectedProduct = "selected_product"
 
 const super_admin_role_code="6666"
 const super_admin_role="superadmin"
@@ -13,11 +15,13 @@ const super_admin_role="superadmin"
 const regular_user_role_code="2222"
 const regular_user_role="customer"
 
-// const BASE_URL = "https://www.gasnigeriaapi.com:8002/"
-const BASE_URL = "http://localhost:8002/"
+const BASE_URL = "https://www.gasnigeriaapi.com:8002/"
+// const BASE_URL = "http://localhost:8002/"
 
 const REG_API = BASE_URL + "auth/registration"
 const LOGIN_API = BASE_URL + "auth/login"
+const RESET_PASSWORD = BASE_URL + "auth/forgotpassword/"
+const CHANGE_PASSWORD = BASE_URL + "auth/changepassword"
 const OTP_RESEND = BASE_URL + "otp/remail/"
 const OTP_VERIFICATION = BASE_URL + "otp/verification/"
 const OTP_VERIFICATION_LINK = BASE_URL + "otp/verification/link"
@@ -29,6 +33,7 @@ const ORDER_GAS_API = BASE_URL + 'user/ordergas/'
 const PLACE_ORDER_GAS_API = BASE_URL + 'user/productorder/order'
 const BULK_GAS_ORDER = BASE_URL + 'user/ordergas/bulk'
 const GAS_ORDER_HISTORY_API = BASE_URL + 'gasorders/'
+const GET_PRODUCT_LIST = BASE_URL + 'superuser/products/'
 
 
 const apiHeaders = (xhr, token) => {

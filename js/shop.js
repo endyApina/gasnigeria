@@ -1,6 +1,49 @@
+location.href = "order.html"
 const chooseProductOrder = (type) => {
     console.log("selected")
     console.log(type)
+}
+
+///CALL API TO GET ALL ORDERS/////
+const options = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': "",
+    }
+};
+fetch(GET_PRODUCT_LIST, options).then(
+    res => res.json()).then(
+        data => {
+        var {code, body, message} = data
+        handleGasList(body)
+    });
+///END OF CALL API TO GET ALL ORDERS/////
+
+const handleGasList = list => {
+    if (Array.isArray(list)) {
+        var optionSelect = `
+            <select class="nice-select" id="gas_select_type">
+        `
+        list.forEach(elem => {
+            console.log(elem)
+            if (elem.category == "gas") {
+                var optionT = `
+                <option value="${elem.product}">${elem.product} </option>
+                `;
+        
+
+                optionSelect = optionSelect + optionT
+            }
+       });
+       var bottomSelect = `
+            </select>
+       `
+
+       optionSelect = optionSelect + bottomSelect
+       $('#test_div').html(optionSelect)
+
+    }
 }
 
 if (Array.isArray(lpGas)) {
