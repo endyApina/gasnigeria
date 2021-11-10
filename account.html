@@ -147,7 +147,7 @@
                                                                 <th>Order</th>
                                                                 <th>Status</th>
                                                                 <th>Total</th>
-                                                                <!-- <th>Action</th> -->
+                                                                <th>Action</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody id="orderTable">
@@ -272,7 +272,55 @@
         </div>
     </div>
     <!-- WISHLIST AREA START -->
-
+    <div class="ltn__modal-area ltn__quick-view-modal-area">
+        <div class="modal fade" id="quick_view_modal" tabindex="-1">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            <!-- <i class="fas fa-times"></i> -->
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                         <div class="ltn__quick-view-modal-inner">
+                             <div class="modal-product-item">
+                                <div class="row">
+                                    <div class="col-lg-12 col-12">
+                                        <div class="modal-product-info">
+                                            <h3 id="modal_product_name"></h3>
+                                            <div class="product-price">
+                                                <span id="modal_order_price"></span>
+                                            </div>
+                                            <div class="modal-product-meta ltn__product-details-menu-1">
+                                                <ul>
+                                                    <li>
+                                                        <div class="input-item input-item-textarea ltn__custom-icon">
+                                                            <textarea name="ltn__message" placeholder="Why are you cancelling your gas order"></textarea>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="ltn__product-details-menu-2">
+                                                <ul>
+                                                    <li>
+                                                        <a href="javascript:;" class="theme-btn-1 btn btn-effect-1">
+                                                            <span>Cancel Order</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <hr>
+                                        </div>
+                                    </div>
+                                </div>
+                             </div>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- FEATURE AREA START ( Feature - 3) -->
     <!-- FEATURE AREA END -->
 

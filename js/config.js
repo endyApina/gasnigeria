@@ -8,6 +8,7 @@ const localViewedProduct = "viewed_product"
 const localCartData = "cart_array"
 const localProducts = "product"
 const localSelectedProduct = "selected_product"
+const localUserOrders = "user_orders"
 
 const super_admin_role_code="6666"
 const super_admin_role="superadmin"
@@ -15,8 +16,8 @@ const super_admin_role="superadmin"
 const regular_user_role_code="2222"
 const regular_user_role="customer"
 
-const BASE_URL = "https://www.gasnigeriaapi.com:8002/"
-// const BASE_URL = "http://localhost:8002/"
+// const BASE_URL = "https://www.gasnigeriaapi.com:8002/"
+const BASE_URL = "http://localhost:8002/"
 
 const REG_API = BASE_URL + "auth/registration"
 const LOGIN_API = BASE_URL + "auth/login"

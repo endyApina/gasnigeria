@@ -90,25 +90,48 @@ if (verification_code) {
     "verification_link": verification_code
   }
   // console.log(data)
-  const options = {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			'Authorization': "",
-		},
-    body: JSON.stringify(data),
-	};
-	fetch(OTP_VERIFICATION_LINK, options).then(
-    res => res.json()).then(
-      data => {
-        if (data.code == 200) {
-          handleSuccessfulVerification(data.body)
-        } else {
-          console.log(data)
-          alert("verification error")
-          console.log("verification error")
-        }
-	});
+  $.ajax({
+    type: "POST",
+    data: JSON.stringify(data),
+    url: OTP_VERIFICATION_LINK,
+    beforeSend: function(xhr) {
+        xhr.setRequestHeader('Content-Type', 'application/json')
+        xhr.setRequestHeader('Accept', 'application/json')
+    },
+    success: function(data) {
+      console.log(data)
+      if (data.code == 200) {
+        handleSuccessfulVerification(data.body)
+      } else {
+        console.log(data)
+        alert("verification error")
+        console.log("verification error")
+      }
+    },
+    error: function(xhr, status) {
+        alert("unable to verify user. contact support")
+    },
+    processData: false
+  }); 
+  // const options = {
+	// 	method: 'POST',
+	// 	headers: {
+	// 		'Content-Type': 'application/json',
+	// 		'Authorization': "",
+	// 	},
+  //   body: JSON.stringify(data),
+	// };
+	// fetch(OTP_VERIFICATION_LINK, options).then(
+  //   res => res.json()).then(
+  //     data => {
+  //       if (data.code == 200) {
+  //         handleSuccessfulVerification(data.body)
+  //       } else {
+  //         console.log(data)
+  //         alert("verification error")
+  //         console.log("verification error")
+  //       }
+	// });
 } else {
   if (userData == null || userData == "") {
     location.href = "./"
