@@ -85,10 +85,11 @@ function payWithPaystack(data) {
       ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
       // label: "Optional string that replaces customer email"
       onClose: function(){
-        alert('Window closed.');
+        // alert('Window closed.');
+        handleCancelledPaystack()
       },
       callback: function(response){
-        let message = 'Payment complete! Reference: ' + response.reference;
+        // let message = 'Payment complete! Reference: ' + response.reference;
         // alert(message);
         handleSubmit(data)
       }
@@ -147,6 +148,7 @@ document.getElementById("place_gas_order").addEventListener("click", function(e)
                 "user_full_name": fullName, 
                 "user_email": email, 
                 "user_id": userData.id, 
+                "uuid": userData.uuid,
                 "weight": weight,
                 "payment_type": paymentMode, 
                 "product": product, 
@@ -156,21 +158,6 @@ document.getElementById("place_gas_order").addEventListener("click", function(e)
 
             structureOrderArray.push(eachOrder)
         });
-    }
-
-    var eachOrder = {
-        "address": address,
-        "delivery_instructions": deliveryInstructions,
-        "delivery_type": deliveryType,
-        "order_quantity": 1,
-        "user_full_name": fullName, 
-        "user_email": email, 
-        "user_id": userData.id, 
-        "weight": 30,
-        "order_amount": grandTotal.toString(), 
-        "payment_type": "30000", 
-        "product": "product Gas", 
-        "product_id": "132-23242s-sfsvw4w", 
     }
 
     if (address == "" || deliveryType == "") {
@@ -227,6 +214,11 @@ const handleSubmit = (data) => {
         },
         processData: false
     });
+}
+
+const handleCancelledPaystack = () => {
+    $('#place_gas_order').prop("disabled", false)
+    $('#place_gas_order').html("PLACE ORDER")
 }
 
 const orderSuccess = () => {

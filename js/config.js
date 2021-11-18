@@ -4,11 +4,22 @@ const admin_role = "admin"
 const appName = "GAS TO GO"
 $('#app_name').text(appName)
 
+//LOCALHOST VARIABLE NAMES
 const localViewedProduct = "viewed_product"
 const localCartData = "cart_array"
 const localProducts = "product"
 const localSelectedProduct = "selected_product"
 const localUserOrders = "user_orders"
+const localSeclectedOrder = "selected_order"
+//END OF LOCALHOST VARIABLE NAMES
+
+
+//ORDER STATUS 
+const pending_status="pending"
+const accepted_status="accepted"
+const confirmed_status="confirmed"
+const cancelled_status="cancelled"
+const rejected_status="rejected"
 
 const super_admin_role_code="6666"
 const super_admin_role="superadmin"
@@ -32,6 +43,7 @@ const REJECT_GAS_ORDER = BASE_URL + 'admin/orders/reject'
 const GET_CUSTOMER_PROFILE = BASE_URL + 'admin/customer/'
 const ORDER_GAS_API = BASE_URL + 'user/ordergas/'
 const PLACE_ORDER_GAS_API = BASE_URL + 'user/productorder/order'
+const CANCEL_PRODUCT_ORDER = BASE_URL + 'user/productorder/cancel'
 const BULK_GAS_ORDER = BASE_URL + 'user/ordergas/bulk'
 const GAS_ORDER_HISTORY_API = BASE_URL + 'gasorders/'
 const GET_PRODUCT_LIST = BASE_URL + 'superuser/products/'
