@@ -11,7 +11,12 @@ const localProducts = "product"
 const localSelectedProduct = "selected_product"
 const localUserOrders = "user_orders"
 const localSeclectedOrder = "selected_order"
+const localUserData = "user_data"
 //END OF LOCALHOST VARIABLE NAMES
+
+const expressDelivery = 1000
+const regularDelivery = 500
+const nextDayDelivery = 300
 
 
 //ORDER STATUS 
@@ -47,6 +52,7 @@ const CANCEL_PRODUCT_ORDER = BASE_URL + 'user/productorder/cancel'
 const BULK_GAS_ORDER = BASE_URL + 'user/ordergas/bulk'
 const GAS_ORDER_HISTORY_API = BASE_URL + 'gasorders/'
 const GET_PRODUCT_LIST = BASE_URL + 'superuser/products/'
+const UPDATE_PROFILE = BASE_URL + 'auth/profile/'
 
 
 const apiHeaders = (xhr, token) => {

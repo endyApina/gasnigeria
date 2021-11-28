@@ -37,7 +37,7 @@ const userGasType = [
     },
   ]
   
-  const appDeliveryFee = "1,500";
+var appDeliveryFee = "1,500";
 
 const lpGas = [
     {

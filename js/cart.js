@@ -1,4 +1,3 @@
-console.log(JSON.parse(localStorage.getItem(localCartData)))
 const cartArray = JSON.parse(localStorage.getItem(localCartData))
 
 const deliveryFee = convertPriceStringtoInt(appDeliveryFee)
@@ -10,15 +9,14 @@ if (Array.isArray(cartArray)) {
     }
     var totalCartOrder = 0;
     cartArray.forEach(cart => {
-        // console.log(cart)
+        console.log(cart)
         var {product_data, quantity} = cart
-        var {weight, price, product_id, image, product} = product_data
+        var {price, product_id, image, product} = product_data
+        const intPrice = parseInt(price)
 
 
         var thisOrder = quantity * convertPriceStringtoInt(price)
         totalCartOrder = totalCartOrder + thisOrder
-
-        console.log(image)
 
         var gasSRC = image
         if (gasSRC == "") {
@@ -27,27 +25,27 @@ if (Array.isArray(cartArray)) {
 
         var row = `
         <tr>
-            <td class="cart-product-remove"><a href="javascript:;" class="removeOrder" data-product-id=${product_id}>x</a></td>
-            <td class="cart-product-image">
+            <td class="cart-product-remove" style="width:5%"><a href="javascript:;" class="removeOrder" data-product-id=${product_id}>x</a></td>
+            <td class="cart-product-image" style="width:18%">
                 <a href="javascript:;"><img src="${gasSRC}" alt="#"></a>
             </td>
-            <td class="cart-product-info">
+            <td class="cart-product-info" style="width:20%">
                 <h4><a href="javascript:;">${product}</a></h4>
             </td>
-            <td class="cart-product-price">&#8358;${price}</td>
-            <td class="cart-product-quantity">
+            <td class="cart-product-price" style="width:17%">&#8358;${intPrice}</td>
+            <td class="cart-product-quantity"style="width:20%">
                 <div>
                     <input type="text" value="${quantity}" name="qtybutton" class="cart-plus-minus-box">
                 </div>
             </td>
-            <td class="cart-product-subtotal">&#8358;${totalCartOrder}</td>
+            <td class="cart-product-subtotal">&#8358;${intPrice * parseInt(quantity)}</td>
         </tr>
         `;
 
         $('#cart_table').append(row)
     });
 
-    const finalOrderTotal = totalCartOrder + deliveryFee
+    // const finalOrderTotal =  
 
     var cartCheckoutTable = `
         <h4>Cart Totals</h4>
@@ -58,12 +56,8 @@ if (Array.isArray(cartArray)) {
                     <td>&#8358;${totalCartOrder}</td>
                 </tr>
                 <tr>
-                    <td>Shipping and Handing</td>
-                    <td>&#8358;${deliveryFee}</td>
-                </tr>
-                <tr>
                     <td><strong>Order Total</strong></td>
-                    <td><strong>&#8358;${finalOrderTotal}</strong></td>
+                    <td><strong>&#8358;${totalCartOrder}</strong></td>
                 </tr>
             </tbody>
         </table>

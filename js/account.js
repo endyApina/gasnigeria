@@ -1,8 +1,17 @@
+var savedUserData = JSON.parse(localStorage.getItem(localUserData))
+if (savedUserData) {
+    const {user_data} = savedUserData
+    $('#account_full_name').val(user_data.full_name)
+    $('#account_email').val(user_data.email)
+    $('#account_street').val(user_data.street)
+    $('#account_city').val(user_data.city)
+    $('#account_state').val(user_data.state)
+}
+
 const getUserOrders = () => {
     if (!JSON.parse(localStorage.getItem('user_data'))) {
         location.href = "login.html"
     }
-    const savedUserData = JSON.parse(localStorage.getItem('user_data'))
     $('#account_username').text(savedUserData.user_data.full_name)
     const token = savedUserData.token_string 
     // console.log(token)
@@ -158,4 +167,72 @@ $("#cancel_gas_order").click(function() {
         $(this).prop("disabled", false)
         $(this).html("CANCEL ORDER")
     }, 3000);
+})
+
+var {user_data, gas_station, token_string, user_role} = savedUserData
+console.log(user_data)
+
+$('#save_profile').click(function(e) {
+    $(this).html(configLoader)
+    $(this).prop("disabled", true)
+
+    e.preventDefault()
+
+    var fullName = $('#account_full_name').val()
+    var email = $('#account_email').val()
+    var street = $('#account_street').val()
+    var city = $('#account_city').val()
+    var state = $('#account_state').val()
+
+    if (fullName == "" || email == "" || street == "" || city == "" || state == "") {
+        alert("Fill all details")
+        $(this).prop("disabled", false)
+        $(this).html("SIGN IN")
+        return 
+    }
+
+    var data = {
+        "full_name": fullName, 
+        "email": email, 
+        "street": street, 
+        "city": city, 
+        "state": state
+    }
+
+    $.ajax({
+        type: "PUT",
+        data: JSON.stringify(data),
+        url: UPDATE_PROFILE + user_data.uuid,
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader('Content-Type', 'application/json')
+            xhr.setRequestHeader('Accept', 'application/json')
+        },
+        success: function(data) {
+            const {code, body, message} = data
+            console.log(body)
+            if (code == 200) {
+                setTimeout(() => {    
+                    $('#save_profile').prop("disabled", false)
+                    $('#save_profile').html("SIGN IN")
+                }, 2000);
+                // const {user_data,}
+                var data = {
+                    user_data: body, 
+                    gas_station, 
+                    token_string, 
+                    user_role
+                }
+                localStorage.setItem(localUserData, JSON.stringify(data))
+                location.reload()
+            }
+        },
+        error: function(xhr, status) {
+            alert("error updating user profile. contact support")
+            setTimeout(() => {    
+                $('#sign_in_btn').prop("disabled", false)
+                $('#sign_in_btn').html("SIGN IN")
+            }, 2000);
+        },
+        processData: false
+    }); 
 })

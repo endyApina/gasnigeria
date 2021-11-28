@@ -46,14 +46,6 @@ const footerDiv = `
                             </li>
                         </ul>
                     </div>
-                    <div class="ltn__social-media mt-20">
-                        <ul>
-                            <li><a href="javascript:;" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
-                            <li><a href="javascript:;" title="Twitter"><i class="fab fa-twitter"></i></a></li>
-                            <li><a href="javascript:;" title="Linkedin"><i class="fab fa-linkedin"></i></a></li>
-                            <li><a href="javascript:;" title="Youtube"><i class="fab fa-youtube"></i></a></li>
-                        </ul>
-                    </div>
                 </div>
             </div>
             <div class="col-xl-2 col-md-6 col-sm-6 col-12">

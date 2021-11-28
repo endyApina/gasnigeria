@@ -19,6 +19,20 @@ fetch(GET_PRODUCT_LIST, options).then(
     });
 ///END OF CALL API TO GET ALL ORDERS/////
 
+$('#trigger_cart_modal').click(function() {
+    var selectedOrder = $('#gas_select_type').val()
+    if (selectedOrder == "") {
+        alert("Choose gas order from dropdown")
+        return 
+    } else {
+        console.log(selectedOrder)
+        // localStorage.setItem(localSelectedProduct, selectedOrder)
+        findProduct(selectedOrder)
+        $('#modal_add_gass_tocart_btn').trigger("click")
+    }
+    return 
+})
+
 const handleGasList = list => {
     if (Array.isArray(list)) {
         localStorage.setItem(localProducts, JSON.stringify(list))
@@ -92,9 +106,14 @@ var findProduct = (productID) => {
         gasObject.forEach(element => {
             const {product, price, image, product_id} = element
             if (productID == product_id) {
+                if (image == "") {
+                    var newImage = "gasimg/small.png"
+                    $('#product_image_src').attr("src", newImage);
+                } else {
+                    $('#product_image_src').attr("src", image);
+                }
                 $('#product_name').text(product)
                 $('#product_price').text(price)
-                $('#product_image_src').attr("src", image);
                 // var a = $('#mydiv').data('myval'); //getter
 
                 $('#modal_addtocart_btn').data('product-id',product_id); //setter
@@ -137,7 +156,6 @@ $(document).on('click', 'a#modal_addtocart_btn', function(e) {
         return
     }
     const {gasData, error} = findGasProduct(productID)
-    // console.log(gasData)
     var orderQuant = $('#order_quantity').val()
 
     const productOrder = {
@@ -148,19 +166,23 @@ $(document).on('click', 'a#modal_addtocart_btn', function(e) {
     var cartArrayData = JSON.parse(localStorage.getItem(localCartData))
     // console.log(cartArrayData)
     if (Array.isArray(cartArrayData) && cartArrayData.length != 0) {
+        var match = false
         for (let index = 0; index < cartArrayData.length; index++) {
             const data = cartArrayData[index];
             
             var {product_data, quantity} = data
+            console.log("comparing " + productID + " and " + product_data.product_id)
             if (productID === product_data.product_id ) {
+                // console.log(true)
+                match = true
                 cartArrayData.splice(index, 1, productOrder)
                 localStorage.setItem(localCartData, JSON.stringify(cartArrayData))
                 break
-            } else {
-                cartArrayData.push(productOrder)
-                localStorage.setItem(localCartData, JSON.stringify(cartArrayData))
-                break
-            }
+            } 
+        }
+        if (!match) {
+            cartArrayData.push(productOrder)
+            localStorage.setItem(localCartData, JSON.stringify(cartArrayData))
         }
     } else {
         var cartArray = [];
@@ -185,8 +207,7 @@ $(document).on('click', 'a#modal_add_gas_tocart_btn', function(e) {
         return
     }
     const {gasData, error} = findGasProduct(productID)
-    console.log(gasData)
-    var orderQuant = 1
+    var orderQuant = $('#order_quantity').val()
 
     const productOrder = {
         product_data: gasData, 
@@ -194,7 +215,6 @@ $(document).on('click', 'a#modal_add_gas_tocart_btn', function(e) {
     }
 
     var cartArrayData = JSON.parse(localStorage.getItem(localCartData))
-    console.log(cartArrayData)
     if (Array.isArray(cartArrayData) && cartArrayData.length != 0) {
         for (let index = 0; index < cartArrayData.length; index++) {
             const data = cartArrayData[index];
@@ -219,14 +239,11 @@ $(document).on('click', 'a#modal_add_gas_tocart_btn', function(e) {
     const {product, price, gas_image, product_id} = gasData
     $('#cart_image').attr("src", gas_image)
     $('#cart_product_name').text(product)
-
-    setTimeout(() => {
-        console.log(JSON.parse(localStorage.getItem(localCartData)))
-    }, 2000);
 })
 
 $(document).on('change', 'select#gas_select_type', function() {
     var productID = this.value
+    // console.log(productID)
     window.localStorage.setItem(localSelectedProduct, productID)
     var gasObject = JSON.parse(localStorage.getItem(localProducts))
     if (Array.isArray(gasObject)) {

@@ -4963,7 +4963,7 @@ ul.wp-block-latest-posts.is-grid.alignwide {
     color: var(--white) !important;
     padding: 12px 30px !important; }
     .special-link a:hover {
-      background-color: var(--ltn__secondary-color-2);
+      background-color: var(--ltn__primary-color-3);
       color: var(--white) !important; }
 
 .menu-color-white .ltn__main-menu > ul > li > a {

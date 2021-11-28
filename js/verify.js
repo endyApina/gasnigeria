@@ -71,10 +71,11 @@ $('#submit-otp-button').click(function(e) {
 })
 
 const handleSuccessfulVerification = (responseBody) => {
-  $('.spinner').hide()
+  // $('.spinner').hide()     
+  alert("email has been verified succesfully")
 
   localStorage.setItem('user_data', JSON.stringify(responseBody))
-  location.href = "./account.html"
+  location.href = "./login.html"
 }
 
 if (verification_code) {

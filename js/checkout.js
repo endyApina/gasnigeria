@@ -9,11 +9,37 @@ const orderArray = JSON.parse(localStorage.getItem(localCartData))
 var totalCartOrder = 0;
 var grandTotal = 0;
 
+appDeliveryFee = 0
+// var selectDelivery = document.getElementById("delivery_type")
+$('select#delivery_type').on('change', function() {
+    // alert( this.value );
+    var deliveryType = this.value
+    switch (deliveryType) {
+        case "express":
+            appDeliveryFee = expressDelivery
+            break;
+        case "regular": 
+            appDeliveryFee = regularDelivery
+            break; 
+        case "nextday": 
+            appDeliveryFee = nextDayDelivery
+            break; 
+        default:
+            break;
+    }
+    console.log(appDeliveryFee)
+    $('#delivery_fee_text').html("&#8358;" + appDeliveryFee)
+    var oldTotalInt = parseInt($('#grand_total').text())
+    var newTotal = appDeliveryFee + oldTotalInt
+    $("#grand_total").text(newTotal)
+    $('#shipping_type').text("(" + deliveryType + ")")
+});
+
 const getUserOrder = () => {
     // const gasPrice = userGasType[order.gas_type].price
     // const intFee = getPriceInt(gasPrice)
 
-    const deliveryFee = getPriceInt(appDeliveryFee)
+    const deliveryFee = appDeliveryFee
 
     // const orderQuantity = order.quantity 
     // if (!orderQuantity) {
@@ -42,12 +68,12 @@ const getUserOrder = () => {
             <td>&#8358;${totalCartOrder}</td>
         </tr>
         <tr>
-            <td>Shipping and Handing</td>
-            <td>&#8358;${appDeliveryFee}</td>
+            <td>Shipping <span style="font-weight: bold;" id="shipping_type"></span></td>
+            <td id="delivery_fee_text">&#8358;${appDeliveryFee}</td>
         </tr>
         <tr>
             <td><strong>Order Total</strong></td>
-            <td><strong>&#8358;${grandTotal}</strong></td>
+            <td><strong>&#8358;<span id="grand_total">${grandTotal}</span></strong></td>
         </tr>
         `
         $('#order_content_body').append(row);
@@ -63,13 +89,17 @@ if (!savedUserData) {
 
 if (savedUserData) {
     const userData = savedUserData.user_data
-    const fullName = userData.full_name
-    const email = userData.email 
-    const phone = userData.phone_number
+    const {full_name, email, phone_number, street, city, state} = userData
+    // const fullName = userData.full_name
+    // const email = userData.email 
+    // const phone = userData.phone_number
 
-    $('#fullName').val(fullName)
+    $('#fullName').val(full_name)
     $('#emailAddress').val(email)
-    $('#phone_number').val(phone)
+    $('#phone_number').val(phone_number)
+    $('#streetInput').val(street)
+    $('#cityInput').val(city)
+    $('#stateInput').val(state)
 }
 
 
@@ -95,8 +125,7 @@ function payWithPaystack(data) {
       }
     });
     handler.openIframe();
-  }
-//   console.log(orderArray)
+}
 
 document.getElementById("place_gas_order").addEventListener("click", function(e) {
     e.preventDefault() 
@@ -104,24 +133,42 @@ document.getElementById("place_gas_order").addEventListener("click", function(e)
     $('#place_gas_order').html(configLoader)
     $('#place_gas_order').prop("disabled", true)
 
-    // const gasPrice = userGasType[order.gas_type].price
-    // const intFee = getPriceInt(gasPrice)
-
-    // const deliveryFee = getPriceInt(appDeliveryFee)
-
-    // const orderQuantityPrice = intFee * parseInt(order.quantity)
-    // const grandTotal = orderQuantityPrice + deliveryFee 
-
     const userData = savedUserData.user_data
     const fullName = userData.full_name
     const email = userData.email 
-    const address = $('#streetInput').val() + " " + $('#cityInput').val() +  " " + $('#stateInput').val() 
+
+    if (userData == "" || fullName == "" || email == "") {
+        alert("enter user data")
+        $('#place_gas_order').prop("disabled", false)
+        $('#place_gas_order').html("PLACE ORDER")
+        return 
+    }
+
+    const street = $('#streetInput').val()
+    const city = $('#cityInput').val()
+    const state = $('#stateInput').val()
+
+    const address = street + " " + city +  " " + state
     // const orderQuantity = order.quantity
     const deliveryInstructions = $('textarea#delivery_instructions').val()
     const deliveryType = $('#delivery_type').val()
     // const orderSize = userGasType[order.gas_type].weight
     const cash = $('#cash_delivery').attr('aria-expanded')
     const paystack = $('#paystack_delivery').attr('aria-expanded')
+
+    if (street == "" || city == "" || state == "") {
+        alert("enter billing address")
+        $('#place_gas_order').prop("disabled", false)
+        $('#place_gas_order').html("PLACE ORDER")
+        return 
+    }
+
+    if (deliveryType == "") {
+        alert("please select delivery time")
+        $('#place_gas_order').prop("disabled", false)
+        $('#place_gas_order').html("PLACE ORDER")
+        return 
+    }
 
     var paymentMode = "";
     if (cash == "true") {
