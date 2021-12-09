@@ -27,6 +27,8 @@ $(document).on('click', 'button#new_password_btn', function(e) {
 
     if (password != rPassword) {
         alert("the two passwords do not match")
+        $("#repeat_password").focus()
+        $('#rpassword_error').text("passwords do not much")
         return 
     }
 
@@ -120,4 +122,40 @@ $('#reset_btn').click(function(e) {
     processData: false
     }); 
 
+})
+
+const resetEmailInput = document.getElementById("reset_email")
+resetEmailInput.addEventListener("input", () => {
+    var validity = ValidateEmail(resetEmailInput.value)
+    setTimeout(() => {
+        if (!validity) {
+            $('#reset_email_error_text').text("You have entered an invalid email address!")
+          } else {
+            $('#reset_email_error_text').text("")
+          }
+    }, 1000);
+})
+
+const strengthBadge = document.getElementById('password_check_error')
+const loginPassword = document.getElementById("login_password")
+let timeout;
+loginPassword.addEventListener("input", () => {
+    //The badge is hidden by default, so we show it
+
+  strengthBadge.style.display= 'block'
+  clearTimeout(timeout);
+
+  //We then call the StrengChecker function as a callback then pass the typed password to it
+
+  timeout = setTimeout(() => StrengthChecker(loginPassword.value), 500);
+  // console.log(password.value)
+
+  //Incase a user clears the text, the badge is hidden again
+
+  if(loginPassword.value.length !== 0){
+      strengthBadge.style.display != 'block'
+
+  } else{
+      strengthBadge.style.display = 'none'
+  }
 })

@@ -34,8 +34,8 @@ $('#submitRequest').click(function(e) {
             const body = data.body 
 
             if (code == 200) {
-                alert("message recieved")
-				location.href="shop.html"
+                alert("order recieved")
+				location.href="index.html"
             } else {
                 orderFailed()
                 $('#place_gas_order').prop("disabled", false)

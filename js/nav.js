@@ -10,8 +10,8 @@ var signInText = `
 `;
 
 
-if (JSON.parse(localStorage.getItem('user_data'))) {
-    const savedUserData = JSON.parse(localStorage.getItem('user_data'))
+if (JSON.parse(localStorage.getItem(localUserData))) {
+    const savedUserData = JSON.parse(localStorage.getItem(localUserData))
     if (savedUserData.user_data) {
         signInText = `
             <li><a href="#" onclick="logout();" id="signout_nav_btn">Log Out</a></li>

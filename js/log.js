@@ -71,7 +71,7 @@ const handleLogin = (data) => {
     }
   
     if (data.code == 200 && data.message == "Success") {
-      localStorage.setItem('user_data', JSON.stringify(data.body))
+      localStorage.setItem(localUserData, JSON.stringify(data.body))
 
       const userOrderData = JSON.parse(localStorage.getItem(localCartData))
       console.log(userOrderData); 

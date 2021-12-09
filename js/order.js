@@ -56,6 +56,8 @@ const handleGasList = list => {
        optionSelect = optionSelect + bottomSelect
        $('#test_div').html(optionSelect)
 
+       document.getElementById("test_div").style.display = "block"
+
 
        ///HANDLE ASSESORY SECTION
        list.forEach((gas, index) => {

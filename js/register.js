@@ -4,50 +4,7 @@ const emailInput = document.getElementById("emailInput")
 let timeout;
 
 let password = document.getElementById('passwordInput')
-let strengthBadge = document.getElementById('password_check_error')
-
-let strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})')
-let mediumPassword = new RegExp('((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))')
-var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-
-function StrengthChecker(PasswordParameter){
-  // We then change the badge's color and text based on the password strength
-  if(strongPassword.test(PasswordParameter)) {
-      strengthBadge.style.backgroundColor = "green"
-      strengthBadge.textContent = 'strong password'
-  } else if(mediumPassword.test(PasswordParameter)){
-      strengthBadge.style.backgroundColor = 'blue'
-      strengthBadge.textContent = 'medium strength for your password'
-  } else{
-      strengthBadge.style.backgroundColor = 'red'
-      var errorString = "your password is too weak"
-      if (PasswordParameter.length < 8) {
-        errorString = errorString + "</br>password must be more that 6 characters"
-      }
-      var matchesNumber = PasswordParameter.match(/\d+/g);
-      if (matchesNumber == null) {
-          errorString = errorString + "</br>password must contain at least 1 number"
-      }
-      var specialCharcter = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-      if (!specialCharcter.test(PasswordParameter)) {
-        errorString = errorString + "</br>password must contain at least 1 special character"
-      }
-      strengthBadge.innerHTML = errorString
-  }
-}
-
-function ValidateEmail(inputText) {
-  var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  if(inputText.match(mailformat)) {
-    // alert("Valid email address!");
-    // document.form1.text1.focus();
-    return true;
-  } else {
-    // alert("You have entered an invalid email address!");
-    // document.form1.text1.focus();
-    return false;
-  }
-}
+var strengthBadge = document.getElementById('password_check_error')
 
 // $('#password_error_text').text("")
 submitBtn.addEventListener("click", function(e) {
@@ -113,19 +70,19 @@ submitBtn.addEventListener("click", function(e) {
 
     console.log("completed")
     
-    // const options = {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         'Authorization': "",
-    //     },
-    //     body: JSON.stringify(data)
-    // };
-    // fetch(REG_API, options).then(
-    // res => res.json()).then(
-    //     data => {
-    //         handleSubmitSuccess(data)
-    // });
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': "",
+        },
+        body: JSON.stringify(data)
+    };
+    fetch(REG_API, options).then(
+    res => res.json()).then(
+        data => {
+            handleSubmitSuccess(data)
+    });
 })
 
 const handleSubmitSuccess = (data) => {
@@ -135,8 +92,15 @@ const handleSubmitSuccess = (data) => {
       $('#create_account_btn').html("CREATE ACCOUNT")
       $('#create_account_btn').prop("disabled", false)
 
+      if (data.message == "Phone Number Already exists") {
+        alert("Phone Number already exists. Login with email address to continue")
+        $('#create_account_btn').html("CREATE ACCOUNT")
+        $('#create_account_btn').prop("disabled", false)
+        location.href = "login.html"
+      }
+
       if (data.message == "Email Already exists") {
-        alert("Email already exists")
+        alert("Email already exists. Login to continue")
         $('#create_account_btn').html("CREATE ACCOUNT")
         $('#create_account_btn').prop("disabled", false)
         location.href = "login.html"

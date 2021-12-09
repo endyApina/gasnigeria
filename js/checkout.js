@@ -82,7 +82,7 @@ const getUserOrder = () => {
 
 getUserOrder()
 
-const savedUserData = JSON.parse(localStorage.getItem('user_data'))
+const savedUserData = JSON.parse(localStorage.getItem(localUserData))
 if (!savedUserData) {
     location.href = "login.html"
 }
@@ -163,10 +163,15 @@ document.getElementById("place_gas_order").addEventListener("click", function(e)
         return 
     }
 
+    console.log(deliveryType)
     if (deliveryType == "") {
         alert("please select delivery time")
         $('#place_gas_order').prop("disabled", false)
         $('#place_gas_order').html("PLACE ORDER")
+        $('#delivery_type_select').text("*please select a delivery time")
+        setTimeout(() => {
+            $('#stateInput').focus()
+        }, 1000);
         return 
     }
 

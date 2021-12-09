@@ -99,7 +99,7 @@ if (Array.isArray(userGasType)) {
 
 const buyNow = () => {
     var type = localStorage.getItem("selcted_cylinder")
-    const userObject = JSON.parse(localStorage.getItem('user_data'))
+    const userObject = JSON.parse(localStorage.getItem(localUserData))
     if (userObject == null) {
         var quantity = document.getElementById("order_quantity").value;
         if (!quantity) {

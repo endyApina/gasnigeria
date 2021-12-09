@@ -32,12 +32,8 @@ if (Array.isArray(cartArray)) {
             <td class="cart-product-info" style="width:20%">
                 <h4><a href="javascript:;">${product}</a></h4>
             </td>
-            <td class="cart-product-price" style="width:17%">&#8358;${intPrice}</td>
-            <td class="cart-product-quantity"style="width:20%">
-                <div>
-                    <input type="text" value="${quantity}" name="qtybutton" class="cart-plus-minus-box">
-                </div>
-            </td>
+            <td class="cart-product-price" style="width:16%">&#8358;${intPrice}</td>
+            <td class="cart-product-price" style="width:20%">${quantity}</td>
             <td class="cart-product-subtotal">&#8358;${intPrice * parseInt(quantity)}</td>
         </tr>
         `;

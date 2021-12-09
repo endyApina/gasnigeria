@@ -3,7 +3,7 @@ const current_location = window.location.href
 const splitted = current_location.split('code=')
 var verification_code = splitted[1]
 
-const userData = JSON.parse(localStorage.getItem('user_data'))
+const userData = JSON.parse(localStorage.getItem(localUserData))
 
 if (verification_code == undefined || verification_code == "") {
   if (userData) {
@@ -42,7 +42,7 @@ getVerificationCode()
 $('#submit-otp-button').click(function(e) {
   e.preventDefault()
   const code = $('#input_otp').val()
-  const userData = JSON.parse(localStorage.getItem('user_data'))
+  const userData = JSON.parse(localStorage.getItem(localUserData))
   const tokenString = userData.token_string 
 
   const options = {
@@ -63,7 +63,7 @@ $('#submit-otp-button').click(function(e) {
       } 
 
       if (data.code == 200) {
-        localStorage.setItem('user_data', JSON.parse(data.body))
+        localStorage.setItem(localUserData, JSON.parse(data.body))
         location.href = "./store/"
       }
 	});
@@ -74,7 +74,7 @@ const handleSuccessfulVerification = (responseBody) => {
   // $('.spinner').hide()     
   alert("email has been verified succesfully")
 
-  localStorage.setItem('user_data', JSON.stringify(responseBody))
+  localStorage.setItem(localUserData, JSON.stringify(responseBody))
   location.href = "./login.html"
 }
 

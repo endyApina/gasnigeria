@@ -4,16 +4,6 @@ const admin_role = "admin"
 const appName = "GAS TO GO"
 $('#app_name').text(appName)
 
-//LOCALHOST VARIABLE NAMES
-const localViewedProduct = "viewed_product"
-const localCartData = "cart_array"
-const localProducts = "product"
-const localSelectedProduct = "selected_product"
-const localUserOrders = "user_orders"
-const localSeclectedOrder = "selected_order"
-const localUserData = "user_data"
-//END OF LOCALHOST VARIABLE NAMES
-
 const expressDelivery = 1000
 const regularDelivery = 500
 const nextDayDelivery = 300
@@ -32,8 +22,8 @@ const super_admin_role="superadmin"
 const regular_user_role_code="2222"
 const regular_user_role="customer"
 
-// const BASE_URL = "https://www.gasnigeriaapi.com:8002/"
-const BASE_URL = "http://localhost:8002/"
+const BASE_URL = "https://www.gasnigeriaapi.com:8002/"
+// const BASE_URL = "http://localhost:8002/"
 
 const REG_API = BASE_URL + "auth/registration"
 const LOGIN_API = BASE_URL + "auth/login"
@@ -76,7 +66,7 @@ const apiOptions = (token) => {
 const storeLogin = async (data) => {
   try {
     const jsonData = JSON.stringify(data)
-    await localStorage.setItem('user_data', jsonData)
+    await localStorage.setItem(localUserData, jsonData)
   } catch (error) {
     //handle error
   }
@@ -84,7 +74,7 @@ const storeLogin = async (data) => {
 
 const getUserData = async () => {
   try {
-    const jsonValue = await localStorage.getItem('user_data')
+    const jsonValue = await localStorage.getItem(localUserData)
     return jsonValue != null ? JSON.parse(jsonValue) : null;
   } catch(e) {
     // console.log(err)
@@ -153,4 +143,44 @@ const convertPriceStringtoInt = (price) => {
   var intPrice = parseInt(newPrice)
 
   return intPrice
+}
+
+
+const strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})')
+const mediumPassword = new RegExp('((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))')
+const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+function ValidateEmail(inputText) {
+  var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  if(inputText.match(mailformat)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function StrengthChecker(PasswordParameter){
+  // We then change the badge's color and text based on the password strength
+  if(strongPassword.test(PasswordParameter)) {
+      strengthBadge.style.backgroundColor = "green"
+      strengthBadge.textContent = 'strong password'
+  } else if(mediumPassword.test(PasswordParameter)){
+      strengthBadge.style.backgroundColor = 'blue'
+      strengthBadge.textContent = 'medium strength for your password'
+  } else{
+      strengthBadge.style.backgroundColor = 'red'
+      var errorString = "your password is too weak"
+      if (PasswordParameter.length < 8) {
+        errorString = errorString + "</br>password must be more that 6 characters"
+      }
+      var matchesNumber = PasswordParameter.match(/\d+/g);
+      if (matchesNumber == null) {
+          errorString = errorString + "</br>password must contain at least 1 number"
+      }
+      var specialCharcter = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+      if (!specialCharcter.test(PasswordParameter)) {
+        errorString = errorString + "</br>password must contain at least 1 special character"
+      }
+      strengthBadge.innerHTML = errorString
+  }
 }

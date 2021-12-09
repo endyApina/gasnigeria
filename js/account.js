@@ -1,6 +1,7 @@
 var savedUserData = JSON.parse(localStorage.getItem(localUserData))
 if (savedUserData) {
     const {user_data} = savedUserData
+    console.log(user_data)
     $('#account_full_name').val(user_data.full_name)
     $('#account_email').val(user_data.email)
     $('#account_street').val(user_data.street)
@@ -9,7 +10,7 @@ if (savedUserData) {
 }
 
 const getUserOrders = () => {
-    if (!JSON.parse(localStorage.getItem('user_data'))) {
+    if (!JSON.parse(localStorage.getItem(localUserData))) {
         location.href = "login.html"
     }
     $('#account_username').text(savedUserData.user_data.full_name)
@@ -74,12 +75,15 @@ const handleSuccess = (orderArray) => {
                     break;
             }
 
+            var orderQuantity = parseInt(order.order.order_quantity) 
+
             var orderRow = `
             <tr>
                 <td>${counter}</td>
                 <td>${order.order.product}</td>
+                <td>${orderQuantity}</td>
                 <td>${order.order.order_status}</td>
-                <td>&#8358;${order.order.order_amount}</td>
+                <td>&#8358;${order.order.order_amount * orderQuantity}</td>
                 <td>${action}</td>
             </tr>
             `
@@ -138,14 +142,17 @@ $("#cancel_gas_order").click(function() {
         success: function(data) {
             console.log(data);
             const {code, body, message} = data 
+            $('#close_cancel_modal').trigger("click")
 
             if (code == 200) {
-                alert("order cancelled")
-                setTimeout(() => {
-                    $(this).prop("disabled", false)
-                    $(this).html("CANCEL ORDER")
-                    location.reload()
-                }, 2000);
+                Swal.fire({
+                    title: 'order cancelled',
+                    confirmButtonText: 'OK', 
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        location.reload()
+                    } 
+                })
             } else {
                 $(this).prop("disabled", false)
                 $(this).html("CANCEL ORDER")
@@ -170,7 +177,6 @@ $("#cancel_gas_order").click(function() {
 })
 
 var {user_data, gas_station, token_string, user_role} = savedUserData
-console.log(user_data)
 
 $('#save_profile').click(function(e) {
     $(this).html(configLoader)
@@ -198,7 +204,33 @@ $('#save_profile').click(function(e) {
         "city": city, 
         "state": state
     }
+    
+    Swal.fire({
+        title: 'Do you want to save the changes',
+        showCancelButton: true,
+        showDenyButton: true, 
+        confirmButtonText: 'Yes', 
+        denyButtonText: 'No',
+        customClass: {
+            actions: 'my-actions',
+            cancelButton: 'order-1 right-gap',
+            confirmButton: 'order-2',
+            denyButton: 'order-3',
+          }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            changeProfile(data)
+        } else {
+           setTimeout(() => {
+            $('#save_profile').prop("disabled", false)
+            $('#save_profile').html("Save Profile Changes")
+           }, 2000);
+        }
+    })
 
+})
+
+const changeProfile = (data) => {
     $.ajax({
         type: "PUT",
         data: JSON.stringify(data),
@@ -211,11 +243,7 @@ $('#save_profile').click(function(e) {
             const {code, body, message} = data
             console.log(body)
             if (code == 200) {
-                setTimeout(() => {    
-                    $('#save_profile').prop("disabled", false)
-                    $('#save_profile').html("SIGN IN")
-                }, 2000);
-                // const {user_data,}
+                const {user_data,} = body
                 var data = {
                     user_data: body, 
                     gas_station, 
@@ -223,16 +251,26 @@ $('#save_profile').click(function(e) {
                     user_role
                 }
                 localStorage.setItem(localUserData, JSON.stringify(data))
-                location.reload()
+
+                Swal.fire({
+                    title: 'Success',
+                    confirmButtonText: 'OK', 
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        location.reload()
+                    } 
+                })
+                $('#save_profile').prop("disabled", false)
+                $('#save_profile').html("Save Profile Changes")
             }
         },
         error: function(xhr, status) {
-            alert("error updating user profile. contact support")
-            setTimeout(() => {    
-                $('#sign_in_btn').prop("disabled", false)
-                $('#sign_in_btn').html("SIGN IN")
+            setTimeout(() => {
+                Swal.fire('Changes are not saved', '', 'info')
+                $('#save_profile').prop("disabled", false)
+                $('#save_profile').html("Save Profile Changes")
             }, 2000);
         },
         processData: false
     }); 
-})
+}
