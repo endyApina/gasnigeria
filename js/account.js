@@ -1,7 +1,6 @@
 var savedUserData = JSON.parse(localStorage.getItem(localUserData))
 if (savedUserData) {
     const {user_data} = savedUserData
-    console.log(user_data)
     $('#account_full_name').val(user_data.full_name)
     $('#account_email').val(user_data.email)
     $('#account_street').val(user_data.street)

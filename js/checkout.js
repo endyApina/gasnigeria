@@ -54,7 +54,7 @@ const getUserOrder = () => {
             var {product_data, quantity} = elem
             var {weight, price, product_id, gas_image, product} = product_data
            
-            var thisOrder = quantity * convertPriceStringtoInt(price)
+            var thisOrder = quantity * parseInt(price)
             totalCartOrder = totalCartOrder + thisOrder
         });
     }

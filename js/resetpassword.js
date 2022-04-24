@@ -29,6 +29,8 @@ $(document).on('click', 'button#new_password_btn', function(e) {
         alert("the two passwords do not match")
         $("#repeat_password").focus()
         $('#rpassword_error').text("passwords do not much")
+        $('#new_password_btn').prop("disabled", false)
+        $('#new_password_btn').html("SUBMIT NEW PASSWORD")
         return 
     }
 

@@ -136,8 +136,18 @@
                                     <hr>
                                     <div class="select-quantity" style="margin-top: 1rem; margin-left: 0;">
                                         <div class="col-md-12">
-                                            <div class="input-item" style="display: none;" id="test_div">
-                                                <select id="gas_select_type">
+                                            <div class="input-item" id="inputDiv">
+                                                <select id="gasWeightOption">
+                                                    <option value="">Select Gas Weight</option>
+                                                    <option value="6">6KG </option>
+                                                    <option value="7">7KG </option>
+                                                    <option value="8">8KG </option>
+                                                    <option value="9">9KG </option>
+                                                    <option value="10">10KG </option>
+                                                    <option value="12.5">12.5KG</option>
+                                                    <option value="25">25KG</option>
+                                                    <option value="50">50KG</option>
+                                                    <option value="others">others</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -169,7 +179,7 @@
     <!-- SHOP DETAILS AREA END -->
 
     <!-- PRODUCT TAB AREA START (product-item-3) -->
-    <div class="ltn__product-tab-area ltn__product-gutter pt-85 pb-70">
+    <div class="ltn__product-tab-area ltn__product-gutter pt-85 pb-70" id="accessories_tab">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -227,6 +237,9 @@
                                     <div class="col-lg-6 col-12">
                                         <div class="modal-product-info">
                                             <h3><span id="product_name"></span></h3>
+                                            <div class="product-weight">
+                                                <span><span id="product_weight"></span></span>
+                                            </div>
                                             <div class="product-price">
                                                 <span>&#8358;<span id="product_price"></span></span>
                                             </div>
@@ -304,6 +317,20 @@
     <script src="js/gastype.js"></script>
     <script src="js/main.js"></script>
     <script src="js/order.js"></script>
+
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true;
+        s1.src='https://embed.tawk.to/61ffc828b9e4e21181bdb4a2/1fr7ibqh9';
+        s1.charset='UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
+        })();
+        </script>
+    <!--End of Tawk.to Script-->
 </body>
 </html>
 

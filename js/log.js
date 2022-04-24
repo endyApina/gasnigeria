@@ -79,12 +79,11 @@ const handleLogin = (data) => {
       if (userOrderData) {
         $('#sign_in_btn').prop("disabled", false)
         $('#sign_in_btn').html("SIGN IN")
-        console.log("valid temp login")
-        location.href = "checkout.html"
+        location.href = "cart.html"
       } else {
         $('#sign_in_btn').prop("disabled", false)
         $('#sign_in_btn').html("SIGN IN")
-        location.href="shop.html"
+        location.href="index.html"
       }
     }
   }

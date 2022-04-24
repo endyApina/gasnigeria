@@ -43,6 +43,7 @@ const BULK_GAS_ORDER = BASE_URL + 'user/ordergas/bulk'
 const GAS_ORDER_HISTORY_API = BASE_URL + 'gasorders/'
 const GET_PRODUCT_LIST = BASE_URL + 'superuser/products/'
 const UPDATE_PROFILE = BASE_URL + 'auth/profile/'
+const GET_GAS_BASE_WEIGHT = BASE_URL + 'superuser/settings/'
 
 
 const apiHeaders = (xhr, token) => {
@@ -170,6 +171,10 @@ function StrengthChecker(PasswordParameter){
   } else{
       strengthBadge.style.backgroundColor = 'red'
       var errorString = "your password is too weak"
+      var firstChar = PasswordParameter.charAt(0)
+      if (firstChar != firstChar.toUpperCase()) {
+        errorString = errorString + "</br>password must begin with a capital letter"
+      }
       if (PasswordParameter.length < 8) {
         errorString = errorString + "</br>password must be more that 6 characters"
       }
@@ -183,4 +188,27 @@ function StrengthChecker(PasswordParameter){
       }
       strengthBadge.innerHTML = errorString
   }
+}
+
+
+document.addEventListener("visibilitychange", function() {
+  if (localStorage.getItem(localUserData) != "") {
+    if (document.visibilityState === 'visible') {
+      setTimeout(() => {
+          localStorage.removeItem(localUserData)
+          this.location.href = "login.html"
+      }, 360000);
+    }
+  } 
+});
+
+function commafy( num ) {
+  var str = num.toString().split('.');
+  if (str[0].length >= 5) {
+      str[0] = str[0].replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+  }
+  if (str[1] && str[1].length >= 5) {
+      str[1] = str[1].replace(/(\d{3})/g, '$1 ');
+  }
+  return str.join('.');
 }

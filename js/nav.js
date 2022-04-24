@@ -1,5 +1,5 @@
 const logout = () => {
-    localStorage.removeItem("user_data")
+    localStorage.removeItem(localUserData)
     location.href="login.html"
 }
 
@@ -53,6 +53,7 @@ const headerNav = `
                             <li><a href="index.html">Home</a></li>
                             <li><a href="order.html">Store</a></li>
                             <li><a href="account.html">Orders</a></li>
+                            <li><a href="order.html#accessories_tab">Accessories</a></li>
                             <li><a href="contact.html">Bulk Order</a></li>
                             <li class="special-link"><a href="shop.html">ORDER NOW</a></li>
                         </ul>
@@ -94,6 +95,7 @@ const mobileNav = `
                 <li><a href="index.html">Home</a></li>
                 <li><a href="order.html">Store</a></li>
                 <li><a href="account.html">Orders</a></li>
+                <li><a href="order.html#accessories_tab">Accessories</a></li>
                 <li><a href="contact.html">Bulk Order</a></li>
             </ul>
         </div>

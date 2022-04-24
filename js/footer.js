@@ -54,7 +54,7 @@ const footerDiv = `
                     <div class="footer-menu">
                         <ul>
                             <li><a href="login.html">Login</a></li>
-                            <li><a href="orders.html">Store</a></li>
+                            <li><a href="order.html">Store</a></li>
                             <li><a href="cart.html">My cart</a></li>
                             <li><a href="contact.html">Bulk Order</a></li>
                             <li><a href="account.html">My account</a></li>
@@ -84,4 +84,19 @@ const footerDiv = `
     </div>
 </div>
 </footer>
+
+
+<!--Start of Tawk.to Script-->
+// <script type="text/javascript">
+//     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+//     (function(){
+//     var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+//     s1.async=true;
+//     s1.src='https://embed.tawk.to/61ffc828b9e4e21181bdb4a2/1fr7ibqh9';
+//     s1.charset='UTF-8';
+//     s1.setAttribute('crossorigin','*');
+//     s0.parentNode.insertBefore(s1,s0);
+//     })();
+//     </script>
+<!--End of Tawk.to Script-->
 `;
