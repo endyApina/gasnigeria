@@ -1,4 +1,3 @@
-
 document.getElementById("footer_div").innerHTML = footerDiv;
 document.getElementById("sub_nav").innerHTML = subNav
 

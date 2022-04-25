@@ -44,6 +44,10 @@ const GAS_ORDER_HISTORY_API = BASE_URL + 'gasorders/'
 const GET_PRODUCT_LIST = BASE_URL + 'superuser/products/'
 const UPDATE_PROFILE = BASE_URL + 'auth/profile/'
 const GET_GAS_BASE_WEIGHT = BASE_URL + 'superuser/settings/'
+const GET_BASE_PRICE = BASE_URL + 'superuser/settings/'
+
+//localstorage values
+const local_gas_settings = "local_gas_setting"
 
 
 const apiHeaders = (xhr, token) => {
@@ -212,3 +216,33 @@ function commafy( num ) {
   }
   return str.join('.');
 }
+
+
+
+const getBasePrice = () => {
+  const basePriceData = JSON.parse(localStorage.getItem(local_gas_settings))
+  if (basePriceData == null || basePriceData == undefined) {
+      const options = {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': "",
+          }
+      };
+      fetch(GET_BASE_PRICE, options).then(
+          res => res.json()).then(
+              data => {
+              var {code, body, message} = data
+              // handleGasList(body)
+              console.log(data)
+              var gasRespBody = body[0]
+              if (gasRespBody != null && gasRespBody != undefined) {
+                  localStorage.setItem(local_gas_settings, JSON.stringify(gasRespBody))
+                  return gasRespBody
+              }
+          });
+  } else {
+      return basePriceData
+  }
+}
+getBasePrice()

@@ -26,9 +26,14 @@ $('#trigger_cart_modal').click(function() {
         return 
     } else {
         localStorage.removeItem(localSelectedProduct)
+        var weightBasePrice = getBasePrice()
+        const {base_price} = weightBasePrice
+        const total_price = parseInt(base_price) * parseInt(selectedOrder)
+        console.log(total_price)
         var newImage = "gasimg/small.png"
         $('#product_image_src').attr("src", newImage);
-        getWeightInformation(selectedOrder)
+        $('#product_price').text(total_price)
+        $('#product_weight').text(selectedOrder + "KG")
         $('#modal_add_gass_tocart_btn').trigger("click")
     }
     return 
@@ -96,7 +101,10 @@ const handleGasList = list => {
 }
 
 var findProduct = (productID) => {
+    alert()
     var gasObject = JSON.parse(localStorage.getItem(localProducts))
+    console.log(gasObject)
+    var gasWeightInf = getWeightInformation(selectedOrder)
     // var selectedGas;
     if (Array.isArray(gasObject)) {
         gasObject.forEach(element => {
